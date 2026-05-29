@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hampter Memoes</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>GO TO HAMPTER MEMOBOARD</h1>
+        <button>MAKE NEW</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded",main);
+
+        const container = document.querySelector("#container");
+        const button = document.querySelector("#container > button");
+        //하위 선택자 (바로 하위 요소만 선택)
+
+        function main(){
+            console.log("DOM Loaded")
+            button.addEventListener("click",);
+        }
+    </script>
+</body>
+</html>
