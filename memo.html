@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hampter Memoboard</title>
     <style>
+        *{
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0px;
+        }
+        textarea {
+            resize: none;
+        }
         .center {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        #pusy {
+        #page {
             height: 100vh;
+            flex-direction: column;
+        }
+        #memoWriter{
+            flex-direction: column;
         }
     </style>
 </head>
@@ -19,7 +32,10 @@
     <section id="page">
         <section id="containter">
             <title>Hampter Memoboard</title>
-
+            <form id="memoWriter">
+                <textarea name="memo"></textarea>
+                <button>SUBMIT</button>
+            </form>
         </section>
     </section>
 </body>
