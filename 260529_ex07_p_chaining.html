@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Chaining</title>
+</head>
+<body>
+    <script>
+        function delay(){
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        delay(1000).then(() => {
+            if (Math.random()>0.5){
+                console.log("successed")
+                return delay(1000)
+            } else {
+                throw new Error("failed")
+            }
+            
+        }).then(() => {
+            console.log("YOU successed!")
+            
+        }).catch(() => {
+            console.log("YOU failed!")
+        }).finally(() => {
+            console.log("WHAT do i care?")
+        })//논리 플로우 종결
+        .then(() => {
+            console.log("NEW PROMISE CHAIN ACTIVATED");
+        });
+        
+    </script>
+</body>
+</html>

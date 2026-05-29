@@ -1,0 +1,60 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function f1(){
+                console.log("work A");
+            }
+            function f2(){
+                console.log("work B");
+            }
+            function f3(){
+                console.log("work C");
+            }
+            //setTimeout을 이용한 비동기 처리
+            setTimeout(() => {
+                f1()
+            }, Math.random()*1000);
+
+            setTimeout(() => {
+                f2()
+            }, Math.random()*1000);
+
+            setTimeout(() => {
+                f3()
+            }, Math.random()*1000);
+            //비동기 처리 시 작업 시간은 제어할 수 없다.
+            setTimeout(() => {
+                f1(); 
+                setTimeout(() => {
+                    f2();
+                    setTimeout(() => {
+                        f3()
+                    }, Math.random()*1000); 
+                }, Math.random()*1000); 
+            }, Math.random()*1000);
+            //적층시키면 어느 정도 동기 처리는 가능하지만 가독성이 떨어지고 스코프 문제가 생길 수 있다.
+            
+            //2. 예외 처리
+            try{
+            setTimeout(()=>{
+                console.log("error occur case")
+                //작업 큐
+                throw new Error("error occured!");
+                f1();
+                console.log("line of no reach");
+            })
+            //콜 스택
+            console.log("fine workflow");
+            } catch (error){
+                console.log(`catch ${error}`)
+            }
+
+        </script>
+    </body>
+    </html>

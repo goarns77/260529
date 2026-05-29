@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback2</title>
+</head>
+<body>
+    <script>
+        //동기 콜백
+        const a = ["apple","banana","cherry"];
+        a.forEach(console.log); //실행 함수를 받아서 동기적으로 실행
+
+        //비동기 콜백
+        document.querySelector("button").addEventListener("click",()=>{
+            console.log("clicked");
+        }); //click 액션이 일어났을 때 task queue에 쌓임 > 이벤트 루프 종료 시 나옴
+
+    </script>
+</body>
+</html>

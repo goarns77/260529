@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+</head>
+<body>
+    <button onclick="delay()">기다리기</button>
+    <button id="stopper">멈추기</button>
+    <script>
+        function delay() {
+            //setTimeout(()=>{console.log("1sec passed")},1000);
+            const timerId = setTimeout(()=> console.log ("5s passed"), 5000);
+            console.log(timerId);
+            document.querySelector("#stopper").addEventListener("click",()=> {
+                console.log(`timer ${timerId} stopped.`);
+                clearTimeout(timerId);
+            });
+        }
+
+        let counter = 0;
+        const timerId2 = setInterval(()=>{
+            counter = counter + 1;
+            console.log(`${counter}sec passed`);
+        }, 1000);
+        document.querySelector("#stopper").addEventListener("click",()=>{
+            console.log(`timer ${timerId2} stopped.`);
+            clearInterval(timerId2);
+        });
+    </script>
+</body>
+</html>
