@@ -4,172 +4,329 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hampter Memoboard</title>
+    <!-- Use Quicksand font as per DESIGN.md -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* 전체 공통으로 작동해야 하는 태그 수준의 서식 */
-        *{
+        * {
             box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
         }
         body {
-            margin: 0px;
+            margin: 0;
+            background-color: #4E342E; /* Walnut Brown background for the outside frame */
+            color: #4E342E; /* Walnut Brown text inside */
+            display: flex;
+            justify-content: center;
         }
         textarea {
             resize: none;
+            font-family: 'Quicksand', sans-serif;
         }
-        /* 반복해서 쓰이는 내용은 클래스로 작성 */
         .center {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* id를 의미하는 선택자 # */
+        
         #page {
-            height: 100vh;
+            width: 100%;
+            max-width: 1200px; /* Centered max 1200px container */
+            min-height: 100vh;
+            background-color: #FFF8E1; /* Cream base for the content */
             flex-direction: column;
+            padding: 40px 24px;
+            /* 좌우 보더라인으로 프레임/포커스 효과 */
+            border-left: 16px solid #3E2924;
+            border-right: 16px solid #3E2924;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
+        
         #container {
             flex-direction: column;
+            width: 100%;
+            align-items: center;
+            gap: 24px;
         }
-        #container h1{
+        
+        h1 {
             text-align: center;
+            font-weight: 700;
+            font-size: 32px;
+            margin: 0;
+            color: #4E342E;
         }
 
-        #memoWriter{
+        /* Buttons (Pill shapes, Sunflower yellow) */
+        button {
+            padding: 8px 24px;
+            border-radius: 9999px; /* Pill */
+            border: none;
+            background-color: #FFC107; /* Sunflower Yellow */
+            color: #4E342E;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(78, 52, 46, 0.1); /* Soft brown shadow */
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(78, 52, 46, 0.15);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .header-actions a {
+            text-decoration: none;
+        }
+        
+        /* Secondary buttons */
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid #FF9800; /* Fur-orange border */
+            color: #4E342E;
+            box-shadow: none;
+        }
+
+        /* Reset/Delete buttons */
+        .btn-danger {
+            background-color: #FF8A80; /* Soft Pink */
+            color: white;
+        }
+
+        /* Copy buttons */
+        .btn-success {
+            background-color: #81C784; /* Mint Green */
+            color: white;
+        }
+
+        /* Form (The Pouch) */
+        #memoWriter {
+            display: flex;
             flex-direction: column;
-            gap: 8px;
-            background-color: beige;
-            padding:16px;
-            border: 1px solid gray;
-            border-radius: 8px;
+            gap: 16px;
+            background-color: #FFE0B2; /* Peach / soft orange pouch */
+            padding: 24px;
+            border-radius: 32px; /* Large radius */
+            width: 100%;
+            max-width: 600px;
+            box-shadow: inset 0 4px 12px rgba(78, 52, 46, 0.08); /* Inset shadow */
         }
-        #memoWriter>button{
-            padding: 8px 16px;
-        }
-
-        #memolist {
-            gap: 8px;
+        
+        #memoWriter textarea {
+            width: 100%;
+            height: 100px;
+            border-radius: 16px;
+            border: 1px solid #FFB74D;
+            background-color: #FFFDE7; /* Cream-tinted input background */
             padding: 16px;
-            /* flex-direction 기본값 row → 메모가 좌→우로 배치, wrap으로 줄바꿈 */
-            flex-wrap: wrap;
+            font-size: 16px;
+            color: #4E342E;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        #memoWriter textarea:focus {
+            border-color: #FFC107;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.3); /* Primary yellow glow */
         }
 
-        #memolist div{  
-            width: 240px;
-            height: 160px;
-            border: 1px solid gray;
-            border-radius: 8px;
-            padding: 8px;
-            background-color: #FFF7c5;
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* Memo List */
+        #memolist {
+            width: 100%;
+            display: flex;
+            gap: 24px;
+            padding: 24px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Card (Pure white, 32px radius) */
+        .memo-card {
+            width: 280px;
+            height: auto;
+            min-height: 200px;
+            background-color: #FFFFFF; /* Pure White */
+            border-radius: 32px; /* 32px corner radius */
+            padding: 24px; /* Generous padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 24px rgba(78, 52, 46, 0.08); /* Soft brown-tinted shadow */
+            transition: transform 0.2s;
+        }
+        
+        .memo-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .memo-text {
+            flex-grow: 1;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-bottom: 16px;
+            font-size: 16px;
+            line-height: 1.5; /* Generous line height */
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .card-actions button {
+            padding: 6px 16px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <!-- class="center"를 section에 부여해 flex 레이아웃 적용 -->
     <section id="page" class="center">
         <section id="container" class="center">
             <h1>Hampter Memoboard</h1>
-            <!-- validation : 검증 -->
-            <!-- 프런트엔드/브라우저에서의 검증은 모두 회피/조작 가능 -->
-            <form id="memoWriter" class="center">
-                <textarea name="memo" required></textarea>
-                <button>submit</button>
-            </form>
-            <!-- 작성된 메모를 배치 -->
-            <section id="memolist" class="center">
+            
+            <div class="header-actions">
+                <a href="index.html">
+                    <button class="btn-secondary" type="button">Go to Main</button>
+                </a>
+            </div>
 
+            <form id="memoWriter">
+                <textarea name="memo" placeholder="Write your memo here..." required></textarea>
+                <div class="form-actions">
+                    <button type="submit">Submit</button>
+                    <button id="resetBtn" class="btn-danger" type="button">Reset All</button>
+                </div>
+            </form>
+
+            <section id="memolist">
+                <!-- Memos will be placed here -->
             </section>
         </section>
     </section>
+
     <script>
         document.addEventListener("DOMContentLoaded", main);
 
-        // DOM 요소
+        // DOM Elements
         const memoWriter = document.querySelector("#memoWriter");
         const memoList = document.querySelector("#memolist");
+        const resetBtn = document.querySelector("#resetBtn");
 
-        // 진입점. entrypoint
         function main() {
             console.log("DOM Loaded");
             memoWriter.addEventListener("submit", memoWriterHandler);
-            // 이전에 저장된 메모를 화면에 표시
+            
+            // Reset All Button
+            resetBtn.addEventListener("click", () => {
+                if(confirm("Are you sure you want to clear all memos?")) {
+                    localStorage.removeItem("memo");
+                    drawPrevMemo();
+                }
+            });
+
+            // Initial render
             drawPrevMemo();
         }
 
         function memoWriterHandler(event){
-            // form의 기본 이벤트(새로고침 등)를 금지/정지
             event.preventDefault();
-
-            console.log("form logic start");
+            console.log("Form logic start");
             const formData = new FormData(event.target);
-            // console.log(...formData);
-
-            // FormData에서 "memo" 필드의 값 추출
             const memoText = formData.get("memo");
-            console.log(memoText);
 
-            // 데이터 추가 시 localStorage를 사용해 영속성(persistence) 확보
-            saveMemo(memoText);
+            // Save and get ID
+            const id = saveMemo(memoText);
 
-            // 추가할 텍스트로 메모 박스 그리기
-            // memoList는 렉시컬 스코프로 기억하지만, memoText는 인자로 전달
-            drawMemoBox(memoText);
+            // Draw card with ID
+            drawMemoBox(memoText, id);
+
+            // Reset form input
+            event.target.reset();
         }
 
-        // 특정 텍스트를 메모 박스로 만들어 memoList에 추가
-        function drawMemoBox(memoText){
+        function drawMemoBox(memoText, id){
             const memobox = document.createElement("div");
-            memobox.textContent = memoText;
-            memoList.append(memobox);
+            memobox.className = "memo-card";
 
-            // 삭제 버튼 로직
-            const removeBtn = document.createElement("button");
-            removeBtn.textContent = "Remove";
-            // 여기서 함수선언/표현을 하면 Lexical Scope로 바깥을 가져올 수 있다는 장점
-            removeBtn.addEventListener("click", () => {
-                // DOM에서 해당 메모 박스 제거
-                memobox.remove();
-                // TODO: localStorage에서도 해당 항목 삭제 필요
+            const textDiv = document.createElement("div");
+            textDiv.className = "memo-text";
+            textDiv.textContent = memoText;
+            memobox.append(textDiv);
+
+            const actionsDiv = document.createElement("div");
+            actionsDiv.className = "card-actions";
+
+            // Copy button
+            const cpBtn = document.createElement("button");
+            cpBtn.textContent = "Copy";
+            cpBtn.className = "btn-success";
+            cpBtn.addEventListener("click", () => {
+                if (confirm("Copy this memo to clipboard?")) {
+                    navigator.clipboard.writeText(memoText);
+                    alert("Copied!");
+                }
             });
-            memobox.append(removeBtn);
+
+            // Remove button
+            const rmBtn = document.createElement("button");
+            rmBtn.textContent = "Remove";
+            rmBtn.className = "btn-danger";
+            rmBtn.addEventListener("click", () => {
+                const memoObj = getPrevMemo();
+                memoObj[id] = undefined; // Marking as undefined removes it in JSON.stringify
+                localStorage.setItem("memo", JSON.stringify(memoObj));
+                memobox.remove(); // Remove DOM element
+            });
+
+            actionsDiv.append(cpBtn);
+            actionsDiv.append(rmBtn);
+            memobox.append(actionsDiv);
+            
+            memoList.append(memobox);
         }
 
         function saveMemo(memoText){
-            // localStorage.setItem("memo", memoText); // 최근 메모 1개만 저장
-            // localStorage.setItem("memo", []);        // 배열도 가능하지만 삭제 시 번거로움
-            // -> 객체(Object)로 저장해 키별 관리
+            const memoObj = getPrevMemo();
+            const timeKey = Date.now();
+            memoObj[timeKey] = memoText;
+            localStorage.setItem("memo", JSON.stringify(memoObj));
+            return timeKey; // Return Key (ID)
+        }
 
-            const prevMemo = localStorage.getItem("memo") ?? {};
+        function getPrevMemo() {
+            const prevMemo = localStorage.getItem("memo") ?? "{}";
             let memoObj;
-            try{
-                // JSON text -> 객체로 변환
+            try {
                 memoObj = JSON.parse(prevMemo);
-                // localStorage는 origin(도메인+포트)을 공유
-            }catch(err){
+            } catch (err) {
                 console.log(err);
                 memoObj = {};
             }
-            // 현재 시간을 숫자(ms)로 표시한 값을 키로 사용
-            const timeKey = Date.now();
-            memoObj[timeKey] = memoText;
-            console.log(memoObj);
-            // localStorage는 문자열 key, value만 저장 가능
-            // 객체를 문자열로 변환할 때 JSON.stringify, 반대는 JSON.parse 사용
-            localStorage.setItem("memo", JSON.stringify(memoObj));
-            return timeKey; //생성 후 id값 외부로 리턴
+            return memoObj;
         }
 
         function drawPrevMemo(){
-            // localStorage에서 데이터 빼오기
-            let prevMemo;
-            try {
-                prevMemo = JSON.parse(localStorage.getItem("memo"));
-            } catch {
-                prevMemo = {};
-            }
-            // timeKey : 메모값 쌍을 순회
-            console.log(prevMemo);
-            // 각각 메모 박스 그리기
+            const prevMemo = getPrevMemo();
+            memoList.innerHTML = ""; // Clear existing elements for re-rendering
             for (const key in prevMemo) {
-                drawMemoBox(prevMemo[key]);
+                if (prevMemo[key] !== undefined && prevMemo[key] !== null) {
+                    drawMemoBox(prevMemo[key], key);
+                }
             }
         }
     </script>

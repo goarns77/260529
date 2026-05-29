@@ -1,50 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hampter Memoes</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hampter Memoboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *{
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        #container{
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /*background-color: ;*/
-            /*background-image: url();
-            bakcground-size: cover
-            background-position: center;
-            */
-        }
+      * {
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+      }
+      body {
+        margin: 0;
+        background-color: #4E342E; /* Dark walnut frame outside */
+        display: flex;
+        justify-content: center;
+        color: #4E342E;
+      }
+      #page {
+        width: 100%;
+        max-width: 1200px;
+        min-height: 100vh;
+        background-color: #FFF8E1; /* Cream base inside */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-left: 16px solid #3E2924; 
+        border-right: 16px solid #3E2924;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        text-align: center;
+        padding: 40px;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .logo-container {
+        display: inline-block;
+        padding: 24px;
+        background-color: #FFE0B2;
+        border-radius: 50%;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 25px rgba(78, 52, 46, 0.15);
+        border: 4px solid white;
+      }
+      .logo-container img {
+        width: 128px;
+        height: 128px;
+        object-fit: contain;
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: 48px;
+        margin: 0 0 16px 0;
+        color: #4E342E;
+        letter-spacing: -0.02em;
+      }
+
+      p.intro {
+        font-size: 18px;
+        font-weight: 500;
+        color: #524533;
+        max-width: 450px;
+        line-height: 1.6;
+        margin: 0 0 40px 0;
+      }
+
+      button.make-new {
+        padding: 16px 40px;
+        border-radius: 9999px;
+        border: none;
+        background-color: #FFC107; /* Sunflower Yellow */
+        color: #4E342E;
+        font-weight: 700;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(78, 52, 46, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      button.make-new:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(78, 52, 46, 0.25);
+      }
+      button.make-new:active {
+        transform: translateY(0);
+      }
     </style>
-</head>
-<body>
-    <div id="container">
-        <h1>GO TO HAMPTER MEMOBOARD</h1>
-        <button>MAKE NEW</button>
+  </head>
+  <body>
+    <div id="page">
+      <div class="logo-container">
+        <img alt="Cute Hamster Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI0JW-Sse-YsQL0_wAcpHJu6gFb4SHzWTtUx6CIVqGh4iaY1xHV2i5PLNHus_CHFwellrrwRPP8V3-KUKeLP3oFdJFESp9IR9jB1T15of9O0doUFmS6dDD9nNqKB_jEhI8hT5iznpz-5BadPElXiEEC403kLclJTRxOc6vtd7Tu7WSape-amh9GnsDuotBDADPf7-ekXXw6tRH4yynqNupp1lvirusR_tyXQMUqIjbQ6_SMTQu6Ci_6dEka2rLwVo92AcI2qqZsUkl" />
+      </div>
+      
+      <h1>HAMPTER MEMOBOARD</h1>
+      <p class="intro">
+        Welcome back to your cozy burrow. Capture every thought, snack, and squeak in your personal digital workspace.
+      </p>
+
+      <button class="make-new">MAKE NEW</button>
     </div>
+    
     <script>
-        document.addEventListener("DOMContentLoaded",main);
+      document.addEventListener("DOMContentLoaded", main);
 
-        const container = document.querySelector("#container");
-        const button = document.querySelector("#container > button");
-        //하위 선택자 (바로 하위 요소만 선택)
+      const button = document.querySelector("button.make-new");
 
-        function main(){
-            console.log("DOM Loaded")
-            button.addEventListener("click",()=> {
-                location.href = "memo.html"
-            });
-        }
+      function main() {
+        console.log("DOM Loaded");
+        
+        button.addEventListener("click", () => {
+          location.href = "memo.html";
+        });
+
+        // 전달해주신 코드의 버튼 Micro-interaction(반짝이 이펙트) 추가
+        button.addEventListener('mouseover', () => {
+            const sparkles = ['✨', '🐹', '🥜'];
+            for(let i=0; i<3; i++) {
+                const span = document.createElement('span');
+                span.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
+                span.style.position = 'absolute';
+                span.style.left = (Math.random() * 80 + 10) + '%';
+                span.style.top = '50%';
+                span.style.pointerEvents = 'none';
+                span.style.transition = 'all 1s ease-out';
+                span.style.opacity = '1';
+                span.style.zIndex = '10';
+                button.appendChild(span);
+                
+                setTimeout(() => {
+                    span.style.transform = `translate(${(Math.random()-0.5)*100}px, -100px)`;
+                    span.style.opacity = '0';
+                    setTimeout(() => span.remove(), 1000);
+                }, 50);
+            }
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
